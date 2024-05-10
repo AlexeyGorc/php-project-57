@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class TaskStatusControllerTest extends TestCase
 {
+    use RefreshDatabase;
     private User $user;
     private TaskStatus $taskStatus;
 
@@ -23,13 +24,13 @@ class TaskStatusControllerTest extends TestCase
 
     public function testIndex(): void
     {
-        $response = $this->get(route('task-statuses.index'));
+        $response = $this->get(route('task_statuses.index'));
         $response->assertOk();
     }
 
     public function testCreate(): void
     {
-        $response = $this->get(route('task-statuses.create'));
+        $response = $this->get(route('task_statuses.create'));
         $response->assertOk();
     }
 
@@ -37,7 +38,7 @@ class TaskStatusControllerTest extends TestCase
     {
         $data = ['name' => 'TaskStatus'];
 
-        $response = $this->post(route('task-statuses.store'), $data);
+        $response = $this->post(route('task_statuses.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
         $this->assertDatabaseHas('task_statuses', $data);
@@ -55,6 +56,6 @@ class TaskStatusControllerTest extends TestCase
         $response = $this->patch(route('task_statuses.update', ['task_status' => $this->taskStatus]), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-        $this->assertDatabaseMissing('task_statuses', ['id' => $this->taskStatus->id]);
+        $this->assertDatabaseHas('task_statuses', ['id' => $this->taskStatus->id]);
     }
 }
