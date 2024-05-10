@@ -11,11 +11,6 @@ jobs:
         with:
           php-version: "8.2"
 
-      - name: Set up SQLite
-        run: |
-            touch database/database.sqlite
-            chmod 777 database/database.sqlite
-
       - name: Setup
         run: make setup
 
