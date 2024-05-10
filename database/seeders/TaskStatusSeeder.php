@@ -21,7 +21,7 @@ class TaskStatusSeeder extends Seeder
         ];
 
         foreach ($statuses as $status) {
-            TaskStatus::findOrCreate($status);
+            TaskStatus::firstOrCreate($status);
         }
     }
 }
