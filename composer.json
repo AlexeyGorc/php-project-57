@@ -13,8 +13,7 @@
         "laravel/tinker": "^2.8",
         "laravelcollective/html": "^6.4",
         "sentry/sentry-laravel": "^4.5",
-        "spatie/laravel-query-builder": "^5.7",
-        "symfony/yaml": "^7.0"
+        "spatie/laravel-query-builder": "^5.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
