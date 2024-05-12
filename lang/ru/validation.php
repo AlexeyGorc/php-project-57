@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'required' => 'Это обязательно поле',
+    'required' => 'Это обязательное поле',
     'custom' => [
         'password' => [
             'min' => [
