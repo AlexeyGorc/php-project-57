@@ -27,7 +27,8 @@ return [
             'name' => 'Имя',
             'description' => 'Описание',
             'status_id' => 'Статус',
-            'assigned_to_id' => 'Исполнитель'
+            'assigned_to_id' => 'Исполнитель',
+            'labels' => 'Метки'
         ],
         'buttons' => [
             'update' => 'Обновить'
@@ -47,7 +48,7 @@ return [
         ]
     ],
     'show' => [
-        'header' => 'Просмотр задачи :name',
+        'header' => 'Просмотр задачи: :name',
         'name' => 'Имя',
         'description' => 'Описание',
         'status_id' => 'Статус',

@@ -30,6 +30,7 @@ return [
             'description' => 'Описание'
         ],
         'buttons' => [
+            'create' => 'Создать',
             'update' => 'Обновить'
         ]
     ],

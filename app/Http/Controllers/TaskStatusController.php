@@ -89,10 +89,10 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        //if ($taskStatus->tasks()->exists()) {
-        //    flash(__('flashes.task_statuses.error'))->error();
-        //    return back();
-        //}
+        if ($taskStatus->tasks()->exists()) {
+            flash(__('flashes.task_statuses.error'))->error();
+            return back();
+        }
 
         $taskStatus->delete();
         flash(__('flashes.task_statuses.deleted'))->success();

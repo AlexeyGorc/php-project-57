@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,6 +12,7 @@ use Tests\TestCase;
 class TaskStatusControllerTest extends TestCase
 {
     use RefreshDatabase;
+
     private User $user;
     private TaskStatus $taskStatus;
 
@@ -57,5 +59,21 @@ class TaskStatusControllerTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
         $this->assertDatabaseHas('task_statuses', ['id' => $this->taskStatus->id]);
+    }
+
+    public function testDestroy(): void
+    {
+        $response = $this->delete(route('task_statuses.destroy', ['task_status' => $this->taskStatus]));
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('task_statuses', ['id' => $this->taskStatus->id]);
+    }
+
+    public function testDestroyWithAssociatedTasks(): void
+    {
+        Task::factory()->create(['status_id' => $this->taskStatus->id]);
+        $response = $this->delete(route('task_statuses.destroy', ['task_status' => $this->taskStatus]));
+        $this->assertDatabaseHas('task_statuses', ['id' => $this->taskStatus->id]);
+        $response->assertRedirect();
     }
 }
