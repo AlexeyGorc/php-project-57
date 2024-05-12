@@ -15,10 +15,10 @@ validate:
 	composer validate
 
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 app routes
+	composer exec --verbose phpcs -- --standard=PSR12 app routes tests
 
 lint-fix:
-	composer exec phpcbf -- --standard=PSR12 app routes
+	composer exec phpcbf -- --standard=PSR12 app routes tests
 
 test:
 	php artisan test
