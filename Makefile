@@ -4,7 +4,7 @@ start:
 setup:
 	composer install
 	cp -n .env.example .env
-	php artisan key:generate
+	php artisan key:generate --show
 	npm ci
 	npm run build
 
