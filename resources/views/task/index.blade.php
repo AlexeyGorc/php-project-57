@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="grid col-span-full">
-        <h1 class="mb-5">
-            {{ __('tasks.index.header') }}
-        </h1>
+        <h1 class="mb-5">{{ __('tasks.index.header') }}</h1>
 
         <div class="w-full flex items-center">
             <div>
