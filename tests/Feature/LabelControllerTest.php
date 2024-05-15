@@ -11,8 +11,6 @@ use Tests\TestCase;
 
 class LabelControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private User $user;
     private Label $label;
     private Task $task;
@@ -21,7 +19,6 @@ class LabelControllerTest extends TestCase
     {
         parent::setUp();
         $this->user = User::factory()->create();
-        $this->actingAs($this->user);
         $this->label = Label::factory()->create();
         $this->task = Task::factory()->create();
     }
@@ -34,14 +31,15 @@ class LabelControllerTest extends TestCase
 
     public function testCreate(): void
     {
+        $this->actingAs($this->user);
         $response = $this->get(route('labels.create'));
         $response->assertOk();
     }
 
     public function testStore(): void
     {
-        $data = ['name' => 'Label'];
-
+        $this->actingAs($this->user);
+        $data = Label::factory()->raw(['name' => 'Label']);
         $response = $this->post(route('labels.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
@@ -50,22 +48,27 @@ class LabelControllerTest extends TestCase
 
     public function testEdit(): void
     {
+        $this->actingAs($this->user);
         $response = $this->get(route('labels.edit', $this->label));
         $response->assertOk();
     }
 
     public function testUpdate(): void
     {
-        $data = ['name' => 'NewLabel'];
-
+        $this->actingAs($this->user);
+        $data = Label::factory()->raw(['name' => 'NewLabel']);
         $response = $this->patch(route('labels.update', ['label' => $this->label]), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-        $this->assertDatabaseHas('labels', $data);
+        $this->assertDatabaseHas('labels', [
+            'id' => $this->label->id,
+            'name' => $data['name'],
+        ]);
     }
 
     public function testDestroy(): void
     {
+        $this->actingAs($this->user);
         $response = $this->delete(route('labels.destroy', ['label' => $this->label]));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
@@ -74,6 +77,7 @@ class LabelControllerTest extends TestCase
 
     public function testDestroyWithAssociatedTasks(): void
     {
+        $this->actingAs($this->user);
         $this->task->labels()->attach(['label' => $this->label->id]);
         $response = $this->delete(route('labels.destroy', ['label' => $this->label]));
         $this->assertDatabaseHas('labels', ['id' => $this->label->id]);
